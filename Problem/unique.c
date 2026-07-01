@@ -9,7 +9,7 @@
 //----------function------
 int single_unique(int *array, int *size);
 int multi_unique(int *array, int *size);
-
+int find_extra_element(int *A, int *sizeA, int *B, int *sizeB);
 //-------------------
 int main()
 {
@@ -17,12 +17,23 @@ int main()
 
     int array[]={10,20,30,40,2,6,10,20,30,40,};
     int size = (sizeof(array)/sizeof(int));
-
-
-
+//=============================================
+    int A[] = {2, 1, 3};
+    int sizeA = sizeof(A) / sizeof(A[0]);
+    int B[] = {2, 1, 3, 4};
+    int sizeB = sizeof(B) / sizeof(B[0]);
+//====================================
+// for find_extra_element
     while(1)
     {
-        printf("enter choice\n1-unique\t2-multi_unique\t3-\t4-\t5exit\n");
+        printf("=========================================\n"
+                "enter choice\n"
+                "1-unique\n"
+                "2-multi_unique\n"
+                "3-find_extra_element\n"
+                "4-\n"
+                "5exit\n"
+        "=========================================\n");
         scanf("%d",&choice);
         printf("choice= %d\n", choice);
         switch(choice){
@@ -33,7 +44,7 @@ int main()
                     multi_unique(array, &size);
                     break;
             case 3: 
-                    
+                    printf("Extra Element: %d\n", find_extra_element(A, &sizeA, B, &sizeB));
                     break;
             case 4: 
                     
@@ -133,6 +144,28 @@ int multi_unique(int *array, int *size)
         
 
 
+}
+
+
+int find_extra_element(int *A, int *sizeA, int *B, int *sizeB)
+{
+    int ans = 0;
+
+    // Step 1: XOR all elements of the first array
+    // Time Complexity: O(N) | Space Complexity: O(1)
+    for (int i = 0; i < *sizeA; i++) {
+        ans ^= A[i];
+    }
+
+    // Step 2: XOR all elements of the second array
+    // Every matching element between A and B will cancel out to 0 (X ^ X = 0)
+    // Time Complexity: O(M) | Space Complexity: O(1)
+    for (int i = 0; i < *sizeB; i++) {
+        ans ^= B[i];
+    }
+
+    // The remaining value in 'ans' is the extra element
+    return ans;
 }
 
 //-------------------------------------
